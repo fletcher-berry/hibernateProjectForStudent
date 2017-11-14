@@ -114,7 +114,36 @@ public class PurchasePersistenceServiceImpl implements PurchasePersistenceServic
 
 	@Override
 	public PurchaseSummary retrievePurchaseSummary(Long customerID) throws SQLException, DAOException{
-		return null;
+		try{
+			//create a blank PurchaseSummary
+			PurchaseSummary ps= new PurchaseSummary();
+			//start new transaction
+			em.getTransaction().begin();
+			List<Double> amts =em.createQuery(
+					"select max(p.purchaseAmount), avg(p.purchaseAmount), min(p.purchaseAmount)"
+					+ "from Purchase as p "
+					+ "where p.customer.id = :cID")
+					.setParameter("cID",customerID).getResultList();
+			ps.maxPurchase=amts.get(0);
+			amts=em.createQuery(
+					"select min(p.purchaseAmount), avg(p.purchaseAmount), min(p.purchaseAmount)"
+					+ "from Purchase as p "
+					+ "where p.customer.id = :cID")
+					.setParameter("cID",customerID).getResultList();
+			ps.minPurchase=amts.get(0);
+			amts=em.createQuery(
+					"select avg(p.purchaseAmount), avg(p.purchaseAmount), min(p.purchaseAmount)"
+					+ "from Purchase as p "
+					+ "where p.customer.id = :cID")
+					.setParameter("cID",customerID).getResultList();
+			ps.avgPurchase=amts.get(0);
+			em.getTransaction().commit();
+			return ps;
+		//rollback if error occurs
+		}catch(Exception e){
+			em.getTransaction().rollback();
+			throw e;
+		}
 	}
 
 	@Override
