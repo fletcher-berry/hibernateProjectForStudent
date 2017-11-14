@@ -44,7 +44,7 @@ public class PurchasePersistenceServiceImpl implements PurchasePersistenceServic
 			//start a new transaction
 			em.getTransaction().begin();
 			//retrieve the purchase object by given id
-			Purchase purchase = (Purchase) em.find(Purchase.class, id);
+			Purchase purchase = em.find(Purchase.class, id);
 			//commit transaction
 			em.getTransaction().commit();
 			//return purchase object to the user
@@ -88,6 +88,7 @@ public class PurchasePersistenceServiceImpl implements PurchasePersistenceServic
 			em.remove(del);
 			//commite operation
 			em.getTransaction().commit();
+		//rollback if error occurs	
 		}catch(Exception e){
 			em.getTransaction().rollback();
 			throw e;
@@ -96,9 +97,19 @@ public class PurchasePersistenceServiceImpl implements PurchasePersistenceServic
 
 	@Override
 	public List<Purchase> retrieveForCustomerID(Long customerID) throws SQLException, DAOException{
-		//declare an empty arraylist
-		List<Purchase> purchases = new ArrayList<Purchase>();
-				return null;
+		try{
+			//start new transaction
+			em.getTransaction().begin();
+			List<Purchase> purchases=em.createQuery(
+					"from Purchase as p where p.customer.id = :cID")
+					.setParameter("cID",customerID).getResultList();
+			em.getTransaction().commit();
+			return purchases;
+		//rollback if error occurs
+		}catch(Exception e){
+			em.getTransaction().rollback();
+			throw e;
+		}
 	}
 
 	@Override
@@ -108,6 +119,18 @@ public class PurchasePersistenceServiceImpl implements PurchasePersistenceServic
 
 	@Override
 	public List<Purchase> retrieveForProductID(Long productID) throws SQLException, DAOException{
-		return null;
+		try{
+			//start new transaction
+			em.getTransaction().begin();
+			List<Purchase> purchases=em.createQuery(
+					"from Purchase as p where p.product.id = :pID")
+					.setParameter("pID",productID).getResultList();
+			em.getTransaction().commit();
+			return purchases;
+		//rollback if error occurs
+		}catch(Exception e){
+			em.getTransaction().rollback();
+			throw e;
+		}
 	}
 }
