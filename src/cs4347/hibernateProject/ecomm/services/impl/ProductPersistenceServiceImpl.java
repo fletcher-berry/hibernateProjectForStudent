@@ -11,7 +11,7 @@ import cs4347.hibernateProject.ecomm.entity.Product;
 import cs4347.hibernateProject.ecomm.services.ProductPersistenceService;
 import cs4347.hibernateProject.ecomm.util.DAOException;
 
-// coded by Fletcher
+//Author: Fletcher
 public class ProductPersistenceServiceImpl implements ProductPersistenceService
 {
 	@PersistenceContext 

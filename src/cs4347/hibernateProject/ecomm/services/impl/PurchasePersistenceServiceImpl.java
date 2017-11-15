@@ -12,6 +12,7 @@ import cs4347.hibernateProject.ecomm.services.PurchasePersistenceService;
 import cs4347.hibernateProject.ecomm.services.PurchaseSummary;
 import cs4347.hibernateProject.ecomm.util.DAOException;
 
+//Author: Catherine
 public class PurchasePersistenceServiceImpl implements PurchasePersistenceService{
 	@PersistenceContext 
 	private EntityManager em; 

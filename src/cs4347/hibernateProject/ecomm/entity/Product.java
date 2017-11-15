@@ -8,7 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-// annotations added by Fletcher
+//Author: Fletcher
 @Entity
 @Table(name = "product")
 public class Product 

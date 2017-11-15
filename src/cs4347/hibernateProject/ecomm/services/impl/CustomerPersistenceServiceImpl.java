@@ -13,6 +13,7 @@ import cs4347.hibernateProject.ecomm.entity.Purchase;
 import cs4347.hibernateProject.ecomm.services.CustomerPersistenceService;
 import cs4347.hibernateProject.ecomm.util.DAOException;
 
+//Author: Maxwell
 public class CustomerPersistenceServiceImpl implements CustomerPersistenceService
 {
 	@PersistenceContext 
@@ -31,6 +32,7 @@ public class CustomerPersistenceServiceImpl implements CustomerPersistenceServic
 			//start transaction
 			em.getTransaction().begin();
 			
+			//persist customer
 			em.persist(customer);
 
 			//end transaction
@@ -52,6 +54,7 @@ public class CustomerPersistenceServiceImpl implements CustomerPersistenceServic
 			//start transaction
 			em.getTransaction().begin();
 			
+			//find customer
 			Customer customer = em.find(Customer.class, id);
 
 			//end transaction
@@ -75,8 +78,10 @@ public class CustomerPersistenceServiceImpl implements CustomerPersistenceServic
 			//start transaction
 			em.getTransaction().begin();
 			
+			//find customer
 			Customer c2 = em.find(Customer.class, c1.getId());
 			
+			//update values
 			c2.setFirstName(c1.getFirstName());
 			c2.setLastName(c1.getLastName());
 			c2.setGender(c1.getGender());
@@ -104,8 +109,10 @@ public class CustomerPersistenceServiceImpl implements CustomerPersistenceServic
 			//start transaction
 			em.getTransaction().begin();
 			
+			//find customer
 			Customer cust = em.find(Customer.class, id);
 			
+			//remove customer
 			em.remove(cust);
 
 			//end transaction

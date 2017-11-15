@@ -13,6 +13,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
+//Author: Maxwell
 @Entity
 @Table(name = "customer")
 public class Customer 

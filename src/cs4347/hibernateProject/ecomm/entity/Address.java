@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+//Author: Maxwell
 @Entity
 @Table(name = "address")
 public class Address 
