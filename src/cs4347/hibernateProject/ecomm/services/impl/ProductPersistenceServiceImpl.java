@@ -85,13 +85,41 @@ public class ProductPersistenceServiceImpl implements ProductPersistenceService
 	@Override
 	public Product retrieveByUPC(String upc) throws SQLException, DAOException
 	{
-		return null;
+		try 
+		{
+			em.getTransaction().begin();
+			List<Product> products = em.createQuery("from Product as p where p.prodUPC = :upc")
+					.setParameter("upc", upc).getResultList();
+			if(products.size() != 1)
+				return null;
+			return products.get(0);
+				
+		}
+		catch (Exception ex) 
+		{
+			em.getTransaction().rollback();
+			throw ex;
+		}
 	}
 
 	@Override
 	public List<Product> retrieveByCategory(int category) throws SQLException, DAOException
 	{
-		return null;
+		try 
+		{
+			em.getTransaction().begin();
+			List<Product> products = em.createQuery("from Product as p where p.prodCategory = :category")
+					.setParameter("category", category).getResultList();
+			return products;
+			
+		}
+		catch (Exception ex) 
+		{
+			em.getTransaction().rollback();
+			throw ex;
+		}
+		
+		
 	}
 
 }
