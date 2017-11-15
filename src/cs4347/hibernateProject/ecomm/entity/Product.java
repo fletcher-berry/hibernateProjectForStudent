@@ -1,12 +1,14 @@
 package cs4347.hibernateProject.ecomm.entity;
 
-import javax.persistence.Column;
+
+import javax.persistence.Column; 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+// annotations added by Fletcher
 @Entity
 @Table(name = "product")
 public class Product 
@@ -18,7 +20,7 @@ public class Product
 	private String prodUPC;
 
 	@Id
-	@Column(name = "id")
+	@Column(name = "id") 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Long getId()
 	{
