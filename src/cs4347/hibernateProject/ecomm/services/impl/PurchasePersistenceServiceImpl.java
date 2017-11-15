@@ -119,24 +119,19 @@ public class PurchasePersistenceServiceImpl implements PurchasePersistenceServic
 			PurchaseSummary ps= new PurchaseSummary();
 			//start new transaction
 			em.getTransaction().begin();
-			List<Double> amts =em.createQuery(
-					"select max(p.purchaseAmount), avg(p.purchaseAmount), min(p.purchaseAmount)"
+			Object[] amts = (Object[])em.createQuery(
+					"select max(p.purchaseAmount), avg(p.purchaseAmount), min(p.purchaseAmount) "
 					+ "from Purchase as p "
-					+ "where p.customer.id = :cID")
-					.setParameter("cID",customerID).getResultList();
-			ps.maxPurchase=amts.get(0);
-			amts=em.createQuery(
-					"select min(p.purchaseAmount), avg(p.purchaseAmount), min(p.purchaseAmount)"
-					+ "from Purchase as p "
-					+ "where p.customer.id = :cID")
-					.setParameter("cID",customerID).getResultList();
-			ps.minPurchase=amts.get(0);
-			amts=em.createQuery(
-					"select avg(p.purchaseAmount), avg(p.purchaseAmount), min(p.purchaseAmount)"
-					+ "from Purchase as p "
-					+ "where p.customer.id = :cID")
-					.setParameter("cID",customerID).getResultList();
-			ps.avgPurchase=amts.get(0);
+					+ "where p.customer.id = :cID "
+					+ "group by p.customer.id ")
+					.setParameter("cID",customerID)
+					.getSingleResult();
+			
+			ps.maxPurchase = (Double) amts[0];
+			ps.avgPurchase = (Double) amts[1];
+			ps.minPurchase = (Double) amts[2];
+			
+			
 			em.getTransaction().commit();
 			return ps;
 		//rollback if error occurs

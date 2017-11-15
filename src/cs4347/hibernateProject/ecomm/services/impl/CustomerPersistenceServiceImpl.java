@@ -28,12 +28,17 @@ public class CustomerPersistenceServiceImpl implements CustomerPersistenceServic
 	{
 		try 
 		{
+			//start transaction
 			em.getTransaction().begin();
+			
 			em.persist(customer);
+
+			//end transaction
 			em.getTransaction().commit();
 		}
 		catch (Exception ex) 
 		{
+			//rollback transaction if failure occurs
 			em.getTransaction().rollback();
 			throw ex;
 		}
@@ -44,13 +49,19 @@ public class CustomerPersistenceServiceImpl implements CustomerPersistenceServic
 	{
 		try 
 		{
+			//start transaction
 			em.getTransaction().begin();
+			
 			Customer customer = em.find(Customer.class, id);
+
+			//end transaction
 			em.getTransaction().commit();
+			
 			return customer;
 		}
 		catch (Exception ex) 
 		{
+			//rollback transaction if failure occurs
 			em.getTransaction().rollback();
 			throw ex;
 		}
@@ -61,8 +72,11 @@ public class CustomerPersistenceServiceImpl implements CustomerPersistenceServic
 	{
 		try 
 		{
+			//start transaction
 			em.getTransaction().begin();
+			
 			Customer c2 = em.find(Customer.class, c1.getId());
+			
 			c2.setFirstName(c1.getFirstName());
 			c2.setLastName(c1.getLastName());
 			c2.setGender(c1.getGender());
@@ -70,11 +84,13 @@ public class CustomerPersistenceServiceImpl implements CustomerPersistenceServic
 			c2.setEmail(c1.getEmail());
 			c2.setAddress(c1.getAddress());
 			c2.setCreditCard(c1.getCreditCard());
-			
+
+			//end transaction
 			em.getTransaction().commit();
 		}
 		catch (Exception ex) 
 		{
+			//rollback transaction if failure occurs
 			em.getTransaction().rollback();
 			throw ex;
 		}
@@ -85,13 +101,19 @@ public class CustomerPersistenceServiceImpl implements CustomerPersistenceServic
 	{
 		try 
 		{
+			//start transaction
 			em.getTransaction().begin();
+			
 			Customer cust = em.find(Customer.class, id);
+			
 			em.remove(cust);
+
+			//end transaction
 			em.getTransaction().commit();
 		}
 		catch (Exception ex) 
 		{
+			//rollback transaction if failure occurs
 			em.getTransaction().rollback();
 			throw ex;
 		}
@@ -102,17 +124,19 @@ public class CustomerPersistenceServiceImpl implements CustomerPersistenceServic
 	{
 		try
 		{
+			//start transaction
 			em.getTransaction().begin();
-			
+			// build query and set parameters
 			List<Customer> customers = em.createQuery("from Customer as c where c.address.zipcode = :cZIP")
 					.setParameter("cZIP", zipCode)
 					.getResultList();
-			
+			//end transaction
 			em.getTransaction().commit();
 			return customers;
 		}
 		catch(Exception e)
 		{
+			//rollback transaction if failure occurs
 			em.getTransaction().rollback();
 			throw e;
 		}
@@ -123,18 +147,20 @@ public class CustomerPersistenceServiceImpl implements CustomerPersistenceServic
 	{
 		try
 		{
+			//start transaction
 			em.getTransaction().begin();
-			
+			// build query and set parameters
 			List<Customer> customers = em.createQuery("from Customer as c where c.dob between :cSD and :cED")
 					.setParameter("cSD", startDate)
 					.setParameter("cED", endDate)
 					.getResultList();
-			
+			//end transaction
 			em.getTransaction().commit();
 			return customers;
 		}
 		catch(Exception e)
 		{
+			//rollback transaction if failure occurs
 			em.getTransaction().rollback();
 			throw e;
 		}

@@ -2,6 +2,19 @@ package cs4347.hibernateProject.ecomm.entity;
 
 import java.sql.Date;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "purchase")
 public class Purchase 
 {
 	private Long id;
@@ -10,6 +23,9 @@ public class Purchase
 	private Customer customer;
 	private Product product;
 
+	@Id
+	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Long getId()
 	{
 		return id;
@@ -40,6 +56,7 @@ public class Purchase
 		this.purchaseAmount = purchaseAmount;
 	}
 
+	@ManyToOne//(cascade = CascadeType.ALL)
 	public Customer getCustomer()
 	{
 		return customer;
@@ -50,6 +67,7 @@ public class Purchase
 		this.customer = customer;
 	}
 
+	@ManyToOne
 	public Product getProduct()
 	{
 		return product;
