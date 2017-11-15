@@ -1,5 +1,15 @@
 package cs4347.hibernateProject.ecomm.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "creditcard")
 public class CreditCard 
 {
 	private Long id;
@@ -7,7 +17,8 @@ public class CreditCard
 	private String ccNumber;
 	private String expDate;
 	private String securityCode;
-
+	
+	@Id
 	public Long getId()
 	{
 		return id;
@@ -57,5 +68,6 @@ public class CreditCard
 	{
 		this.securityCode = securityCode;
 	}
+	
 
 }
