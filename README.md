@@ -1,3 +1,3 @@
 # hibernateProjectForStudent
 
-School prohect for Databases class
+School project for Databases class
